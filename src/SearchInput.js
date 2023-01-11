@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { find } from './redux/search';
+import { useSelector } from 'react-redux'
 
 const SearchInput = () => {
-    const [text, setText] = useState("")
+
+    const dispatch = useDispatch()
+
+    const search = useSelector((state) => state.search.value)
 
     const reg = /[^a-zA-Z0-9ㄱ-힣]/g;
 
@@ -11,20 +16,20 @@ const SearchInput = () => {
 
     const handleText = (e) => {
         let replacedText = regReplace(e.target.value)
-        setText(replacedText)
+        dispatch(find({text : replacedText}))
     }
 
     const handleResetWord = () => {
-        setText("")
+        dispatch(find({text : ''}))
     }
 
     return(
         <>
         <div className="search-input-box">
-                <input placeholder="어떤 상품을 찾으시나요?" type="text" autoComplete="off" value={text} onChange={(e) => handleText(e)}/>
+                <input placeholder="어떤 상품을 찾으시나요?" type="text" autoComplete="off" value={search.text} onChange={(e) => handleText(e)}/>
                     <button 
                     className="reset-word" 
-                    style={{display: text.length > 0 ? "" : "none"}} 
+                    style={{display: search.text.length > 0 ? "" : "none"}} 
                     onClick={handleResetWord}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="svg_icon_v1_button-delite-large-gray" className="d-block">

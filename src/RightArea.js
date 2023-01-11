@@ -3,7 +3,6 @@ import DivAndImg from './commonCompoents/DivAndImg'
 import SearchInput from './SearchInput';
 import SearchKeyWord from './SearchKeyWord';
 
-
 function RightArea () {
 
     const [keywords, setKeywords] = useState([]);
@@ -30,6 +29,7 @@ function RightArea () {
                   })
 
                   setKeywords(data.search_word_rank_list)
+
         })()
     },[])
 

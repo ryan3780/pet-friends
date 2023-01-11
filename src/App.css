@@ -116,3 +116,23 @@
   border-radius: 50%;
   cursor: pointer;
 }
+
+.search-keyword{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.search-keyword .word{
+  padding: 6px 15px;
+  border-radius: 18.5px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  background-color: #ffaac780;
+  color: #070707;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}

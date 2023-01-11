@@ -1,9 +1,12 @@
-const divAndimg = ({cla, src, alt, element}) =>{
+const divAndimg = ({cla, src, alt, element, child}) =>{
     return(
+        <>
         <div className = {cla}>
             <img src = {src} alt = {alt} lazy = "loaded" />
             {element}
         </div>
+        {child}
+        </>
     )
 }
 

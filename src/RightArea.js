@@ -1,16 +1,42 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import DivAndImg from './commonCompoents/DivAndImg'
 import SearchInput from './SearchInput';
-// import SearchKeyWord from './SearchKeyWord';
+import SearchKeyWord from './SearchKeyWord';
 
 
 function RightArea () {
 
-    // useEffect(() => {
-    //     (async () => {
-    //         const {keyWords} = 
-    //     })
-    // },[])
+    const [keywords, setKeywords] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            const {data} =
+            await fetch(
+                `https://mobile.api.pet-friends.co.kr/search/word/rank/list`,
+                {
+                method: "POST",
+                headers: {
+                  'Content-type' : 'application/json'
+                },
+                body: JSON.stringify({
+                    "mobile_device_id" : "80197bae-b5a8-4620-87c9-a1dca94a9429",
+                    "mobile_os_code" : "P",
+                    "product_group1_id" : "1"
+                })
+                })
+                .then(response => response.json())
+                .catch((error) => {
+                    alert(error)
+                  })
+
+                  setKeywords(data.search_word_rank_list)
+        })()
+    },[])
+
+    const searchKeyword = keywords.map((item, idx)=> {
+                return <SearchKeyWord keyword={item.search_word} key={idx} />
+            })
+    
 
     return(
         <div className="pf-home-right-area">
@@ -29,8 +55,13 @@ function RightArea () {
                 cla = "search-container"
                 src = "https://cdn.pet-friends.co.kr/resources/pc/img/button-search%402x.png"
                 element={<SearchInput />}
+                child = {<div className="search-keyword">
+                            {searchKeyword}
+                        </div>
+                 }
                 />
             }
+
             />
             
         </div>

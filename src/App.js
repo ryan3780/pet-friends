@@ -1,5 +1,6 @@
 import './App.css';
 import BackGround from './BackGround';
+import LeftArea from './LeftArea';
 import RightArea from './RightArea';
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     <div className="App">
       <BackGround />
       <RightArea />
+      <LeftArea />
     </div>
   );
 }

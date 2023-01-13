@@ -201,6 +201,8 @@
   padding: 0;
   cursor: pointer;
   outline: inherit;
+  padding-right: 7px;
+  padding-left: 12px;
 }
 
 .mr-10{
@@ -211,7 +213,7 @@
   position: relative;
 }
 
-.clickable{
+.select-btn{
   font-family: Noto Sans KR,sans-serif;
   font-weight: 700;
   font-size: 16px;
@@ -224,10 +226,12 @@
   align-items: center;
   border-radius: 16px;
   position: relative;
-  background-color: #fff2f6;
-  cursor: pointer;
-  padding-left: 12px;
   padding-right: 7px;
+  padding-left: 12px;
+}
+
+.clickable{
+  cursor: pointer;
 }
 
 .select-icon{
@@ -244,7 +248,23 @@
   cursor: pointer;
 }
 
-select-item{
+.clicked{
+  background-color: #ff4081;
+  color: #fff!important;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+}
+
+.unclicked{
+  background-color: #fff;
+  color: #000!important;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+}
+
+.select-item{
   font-family: Noto Sans KR,sans-serif;
   font-weight: 700;
   font-size: 16px;
@@ -253,33 +273,14 @@ select-item{
   text-align: center;
   display: inline-block;
   margin: auto;
-  border-radius: 8px 8px 0 0;
   line-height: 40px;
   height: 40px;
 }
 
-.clicked{
-  background-color: #ff4081;
-  font-family: Noto Sans KR,sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  color: #fff!important;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: center;
+.select-item:first-child{
+  border-radius: 8px 8px 0 0;
 }
 
-.unclicked{
-  background-color: #fff;
-    font-family: Noto Sans KR,sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    color: #000!important;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: center;
+.select-item:last-child{
+  border-radius: 0 0 8px 8px;
 }

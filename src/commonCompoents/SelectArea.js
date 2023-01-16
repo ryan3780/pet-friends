@@ -14,7 +14,12 @@ const SelectArea = ({animal, btn, isClicked, toggle}) =>{
     const pick = useSelector((state) => state.pickAnimal.value)
 
     const handleSelectClick = (idx) => {
-        dispatch(pickAnimal({text : pickRef.current[idx].innerText}))
+
+        if(idx !== 0){
+            let beforeSelectedAnimal = pick.text[0]
+            dispatch(pickAnimal({text : [pickRef.current[idx].innerText, beforeSelectedAnimal]}))
+        }
+        
         toggle()
         
     }
@@ -40,9 +45,9 @@ const SelectArea = ({animal, btn, isClicked, toggle}) =>{
             </div>
             {isClicked ? <div className="select-contents">
                 <div className="clickable select-item clicked" ref={(el) => (pickRef.current[0] = el)}
-                 onClick={() => handleSelectClick(0)}> {pick.text === '강아지' ? '강아지' : '고양이'} </div>
+                 onClick={() => handleSelectClick(0)}> {pick.text[0] === '강아지' ? '강아지' : '고양이'} </div>
                 <div className="clickable select-item unclicked" ref={(el) => (pickRef.current[1] = el)} 
-                onClick={() => handleSelectClick(1)}> {pick.text === '강아지' ? '고양이' : '강아지'} </div>
+                onClick={() => handleSelectClick(1)}> {pick.text[0] === '강아지' ? '고양이' : '강아지'} </div>
             </div> : 
                 null
             }

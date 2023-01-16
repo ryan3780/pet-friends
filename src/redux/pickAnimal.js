@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const pickSlice = createSlice({
     name : "pickAnimal",
-    initialState: { value: {text: "강아지"} },
+    initialState: { value: {text: ["강아지", "고양이"]} },
     reducers: {
         pickAnimal: (state, action) => {
             state.value = action.payload;

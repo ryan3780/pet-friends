@@ -13,6 +13,16 @@ code {
     monospace;
 }
 
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+  list-style: none;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
 * {
   -webkit-tap-highlight-color: transparent;
   -webkit-box-sizing: border-box;

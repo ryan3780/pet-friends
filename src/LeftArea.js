@@ -73,13 +73,14 @@ const LeftArea = () =>{
         e.preventDefault();
         down = true;
         x = e.pageX;
-        left = swipeRef.current.scrollLeft()
+        // left = swipeRef.current.scrollLeft()
+        swipeRef.current.style.transform = `translateX(-5%)`
     }
 
     const onMouseMove = (e ) =>{
         if(down){
             let newX = e.pageX
-            swipeRef.current.scrollLeft (left - newX, x)
+            // swipeRef.current.scrollLeft (left - newX, x)
         }
     }
 

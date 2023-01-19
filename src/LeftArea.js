@@ -64,25 +64,41 @@ const LeftArea = () =>{
         menuSelectBarRef.current.style.width = menuSelectRef.current[idx].offsetWidth + 'px'        
     }
 
+    const [isDrag, setIsDrag] = useState(false);
+    const [startX, setStartX] = useState();
+
     const swipeRef = useRef();
 
-    let x, left, down;
+    let endX;
 
-
-    const onMouseDown = (e) =>{
+    const onDragStart = (e) => {
         e.preventDefault();
-        down = true;
-        x = e.pageX;
-        // left = swipeRef.current.scrollLeft()
-        swipeRef.current.style.transform = `translateX(-5%)`
+        setIsDrag(true);
+
+        if(endX === undefined){
+            setStartX(e.pageX);
+        }else{
+            setStartX(endX)
+        }
+        
     }
 
-    const onMouseMove = (e ) =>{
-        if(down){
-            let newX = e.pageX
-            // swipeRef.current.scrollLeft (left - newX, x)
+    const onDragEnd = () => {
+        setIsDrag(false);
+    }
+
+    
+
+    const onDragMove = (e) => {
+        if(isDrag){
+            console.log(endX, startX)
+            const x = e.pageX - startX
+            console.log('startX ', startX, 'x ', x)
+            swipeRef.current.style.transform = `translate(${x}px)`
+            endX = x
         }
     }
+
 
     return (
         <div className="pf-responsive-container" onClick={handleMakeIsClickedFalse}>
@@ -105,7 +121,10 @@ const LeftArea = () =>{
                 <div className='swipe-area'>
                     <ul className='swipe' 
                     ref = {swipeRef}
-                    onMouseDown = {onMouseDown}
+                    onMouseDown={onDragStart}
+                    onMouseMove={onDragMove}
+                    onMouseUp={onDragEnd}
+                    onMouseLeave={onDragEnd}
                     >
                         <li className='bar' ref={menuSelectBarRef} style={{width : '41px'}}>Bar</li>
                         {tabMenu.map((item, idx) => {

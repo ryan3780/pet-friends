@@ -66,15 +66,14 @@ const LeftArea = () =>{
 
     const [isDrag, setIsDrag] = useState(false);
     const [startX, setStartX] = useState();
+    const [endX, setEndX] = useState();
 
     const swipeRef = useRef();
-
-    let endX;
 
     const onDragStart = (e) => {
         e.preventDefault();
         setIsDrag(true);
-
+        
         if(endX === undefined){
             setStartX(e.pageX);
         }else{
@@ -87,15 +86,22 @@ const LeftArea = () =>{
         setIsDrag(false);
     }
 
-    
-
     const onDragMove = (e) => {
         if(isDrag){
-            console.log(endX, startX)
-            const x = e.pageX - startX
-            console.log('startX ', startX, 'x ', x)
-            swipeRef.current.style.transform = `translate(${x}px)`
-            endX = x
+            const x = e.pageX - startX 
+            
+            console.log(x, startX, endX)
+            if(startX != undefined && startX != endX){
+                swipeRef.current.style.transform = `translate(${x}px)`
+            }else{
+                console.log('startX ', startX, 'x ', x)
+                if(endX != undefined){
+                    swipeRef.current.style.transform = `translate(${-(endX + x)}px)`
+                }
+                
+            }
+            
+            setEndX(x)
         }
     }
 

@@ -36,7 +36,7 @@ const LeftArea = () =>{
                 alert(error)
               })
             
-            if(animal.text[0] == "강아지"){
+            if(animal.text[0] === "강아지"){
                 setTabMenu(data.dog_tab_menu_list)
             }else{
                 setTabMenu(data.cat_tab_menu_list)
@@ -59,51 +59,70 @@ const LeftArea = () =>{
 
     const handleMenuClick = (idx) => {
         menuSelectRef.current[idx].className = "on"
-        menuSelectRef.current.filter((item, index) => idx != index ? item.className = 'off' : '')
+        menuSelectRef.current.filter((item, index) => idx !== index ? item.className = 'off' : '')
 
         menuSelectBarRef.current.style.width = menuSelectRef.current[idx].offsetWidth + 'px'        
     }
 
-    const [isDrag, setIsDrag] = useState(false);
-    const [startX, setStartX] = useState();
-    const [endX, setEndX] = useState();
 
     const swipeRef = useRef();
 
-    const onDragStart = (e) => {
+    const [endX, setEndX] = useState();
+
+    const slider = swipeRef.current
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let end;
+
+    const mouseDown = (e) =>{
+        console.log('Down endX : ' , endX)
+        isDown = true;
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+    }
+    
+    const mouseLeave = () => {
+        isDown = false;
+        setEndX(end)
+    }
+
+    const mouseUp = () =>{
+        isDown = false;
+        setEndX(end)
+        
+    }
+   
+    const mouseMove = (e) =>{
+        if(!isDown) return;
         e.preventDefault();
-        setIsDrag(true);
+
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) //scroll-fast
+
+        slider.scrollLeft = scrollLeft - walk;
+    
+        const transLateX = swipeRef.current.style.transform;
+        const range = -transLateX.replaceAll(/\D/g,'')
         
-        if(endX === undefined){
-            setStartX(e.pageX);
+        if(range < -422){
+            swipeRef.current.style.transform = `translateX(-422px)`;
+            end = -422;
+            return;
         }else{
-            setStartX(endX)
+            if(endX !== undefined){
+                swipeRef.current.style.transform = `translateX(${endX + walk}px)`
+                end = endX + walk
+            }else{
+                swipeRef.current.style.transform = `translateX(${walk}px)`
+                end = walk;
+            }
         }
+
+        
         
     }
-
-    const onDragEnd = () => {
-        setIsDrag(false);
-    }
-
-    const onDragMove = (e) => {
-        if(isDrag){
-            const x = e.pageX - startX 
-            
-            console.log(x, startX, endX)
-            if(startX != undefined && startX != endX){
-                swipeRef.current.style.transform = `translate(${x}px)`
-            }else{
-                console.log('startX ', startX, 'x ', x)
-                if(endX != undefined){
-                    swipeRef.current.style.transform = `translate(${-(endX + x)}px)`
-                }
-                
-            }
-            
-            setEndX(x)
-        }
-    }
+    
 
 
     return (
@@ -127,10 +146,10 @@ const LeftArea = () =>{
                 <div className='swipe-area'>
                     <ul className='swipe' 
                     ref = {swipeRef}
-                    onMouseDown={onDragStart}
-                    onMouseMove={onDragMove}
-                    onMouseUp={onDragEnd}
-                    onMouseLeave={onDragEnd}
+                    onMouseDown={mouseDown}
+                    onMouseLeave={mouseLeave}
+                    onMouseUp={mouseUp}
+                    onMouseMove={mouseMove}
                     >
                         <li className='bar' ref={menuSelectBarRef} style={{width : '41px'}}>Bar</li>
                         {tabMenu.map((item, idx) => {

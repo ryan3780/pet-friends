@@ -89,6 +89,14 @@ const LeftArea = () =>{
 
     const mouseUp = () =>{
         isDown = false;
+        const transLateX = swipeRef.current.style.transform;
+        const range = -transLateX.replaceAll(/\D/g,'')
+        
+        if(range < -422){
+            swipeRef.current.style.transform = `translateX(-422px)`;
+            end = -422;
+            return;
+        }
         setEndX(end)
         
     }
@@ -101,23 +109,15 @@ const LeftArea = () =>{
         const walk = (x - startX) //scroll-fast
 
         slider.scrollLeft = scrollLeft - walk;
-    
-        const transLateX = swipeRef.current.style.transform;
-        const range = -transLateX.replaceAll(/\D/g,'')
         
-        if(range < -422){
-            swipeRef.current.style.transform = `translateX(-422px)`;
-            end = -422;
-            return;
+        if(endX !== undefined){
+            swipeRef.current.style.transform = `translateX(${endX + walk}px)`
+            end = endX + walk
         }else{
-            if(endX !== undefined){
-                swipeRef.current.style.transform = `translateX(${endX + walk}px)`
-                end = endX + walk
-            }else{
-                swipeRef.current.style.transform = `translateX(${walk}px)`
-                end = walk;
-            }
+            swipeRef.current.style.transform = `translateX(${walk}px)`
+            end = walk;
         }
+        
 
         
         

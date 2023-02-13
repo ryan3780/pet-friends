@@ -58,10 +58,22 @@ const LeftArea = () =>{
     const menuSelectBarRef = useRef();
 
     const handleMenuClick = (idx) => {
-        menuSelectRef.current[idx].className = "on"
-        menuSelectRef.current.filter((item, index) => idx !== index ? item.className = 'off' : '')
+        menuSelectRef.current[idx].className = "on";
+        menuSelectRef.current.filter((item, index) => idx !== index ? item.className = 'off' : '');
 
-        menuSelectBarRef.current.style.width = menuSelectRef.current[idx].offsetWidth + 'px'        
+        menuSelectBarRef.current.style.width = menuSelectRef.current[idx].offsetWidth + 'px';     
+
+        const firstItemX = menuSelectRef.current[0].getBoundingClientRect().x
+
+        const itemX = menuSelectRef.current[idx].getBoundingClientRect().x
+        
+        menuSelectBarRef.current.style.left = (itemX - firstItemX )+ 32 +`px`
+
+
+        console.log(menuSelectRef.current[idx].getBoundingClientRect())
+
+       
+        
     }
 
 
@@ -84,22 +96,47 @@ const LeftArea = () =>{
     
     const mouseLeave = () => {
         isDown = false;
+
+        const transLateX = swipeRef.current.style.transform;
+        const range = transLateX.replaceAll(/\D/g,'')
+
+        if(-range < -422){
+            swipeRef.current.style.transform = `translateX(-422px)`;
+            end = -422;
+            return;
+        }
+
+        if(end > 0){
+            swipeRef.current.style.transform = `translateX(0px)`;
+            end = 0;
+            return;
+        }
+
         setEndX(end)
     }
 
     const mouseUp = () =>{
         isDown = false;
+
         const transLateX = swipeRef.current.style.transform;
-        const range = -transLateX.replaceAll(/\D/g,'')
-        
-        if(range < -422){
+        const range = transLateX.replaceAll(/\D/g,'')
+
+        if(-range < -422){
             swipeRef.current.style.transform = `translateX(-422px)`;
             end = -422;
             return;
         }
+
+        if(end > 0){
+            swipeRef.current.style.transform = `translateX(0px)`;
+            end = 0;
+            return;
+        }
+
         setEndX(end)
         
     }
+    
    
     const mouseMove = (e) =>{
         if(!isDown) return;
@@ -109,7 +146,7 @@ const LeftArea = () =>{
         const walk = (x - startX) //scroll-fast
 
         slider.scrollLeft = scrollLeft - walk;
-        
+
         if(endX !== undefined){
             swipeRef.current.style.transform = `translateX(${endX + walk}px)`
             end = endX + walk
@@ -118,12 +155,8 @@ const LeftArea = () =>{
             end = walk;
         }
         
-
-        
-        
     }
     
-
 
     return (
         <div className="pf-responsive-container" onClick={handleMakeIsClickedFalse}>

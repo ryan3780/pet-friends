@@ -331,6 +331,7 @@
   height: 3px;
   border-radius: 1.5px;
   background-color: #ff4081;
+  transition-duration: 400ms;
 }
 
 .swipe-area .swipe li {

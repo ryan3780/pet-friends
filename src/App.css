@@ -357,3 +357,19 @@
   color: #666;
   font-weight: 400;
 }
+
+.slick-arrow.slick-prev::before {
+  color: black;
+}
+
+.slick-arrow.slick-next::before {
+  color: black;
+}
+
+.slick-arrow.slick-prev {
+  height: 60px;
+}
+
+.slick-arrow.slick-next {
+  height: 60px;
+}

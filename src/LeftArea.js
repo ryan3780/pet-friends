@@ -1,6 +1,7 @@
 import SelectArea from './commonCompoents/SelectArea'
 import { useSelector } from 'react-redux'
 import { useState, useEffect, useCallback, useRef } from 'react';
+import EventCarousel from './EventCarousel';
 
 
 const LeftArea = () =>{
@@ -41,11 +42,13 @@ const LeftArea = () =>{
             }else{
                 setTabMenu(data.cat_tab_menu_list)
             }
+
       }, [animal]);
 
     useEffect(() => {
-        fetchData()
+        fetchData();
     },[fetchData])
+
 
     const handleMakeIsClickedFalse = () =>{
         if(isClicked){
@@ -58,8 +61,9 @@ const LeftArea = () =>{
     const menuSelectBarRef = useRef();
 
     const handleMenuClick = (idx) => {
+        
         menuSelectRef.current[idx].className = "on";
-        menuSelectRef.current.filter((item, index) => idx !== index ? item.className = 'off' : '');
+        menuSelectRef.current.filter((item, index) => idx !== index && item != null ? item.className = 'off' : '');
 
         menuSelectBarRef.current.style.width = menuSelectRef.current[idx].offsetWidth + 'px';     
 
@@ -69,11 +73,6 @@ const LeftArea = () =>{
         
         menuSelectBarRef.current.style.left = (itemX - firstItemX )+ 32 +`px`
 
-
-        console.log(menuSelectRef.current[idx].getBoundingClientRect())
-
-       
-        
     }
 
 
@@ -200,7 +199,7 @@ const LeftArea = () =>{
                     </ul>
                 </div>
             </div>
-
+            <EventCarousel />
         </div>
     )
 }

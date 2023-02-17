@@ -286,7 +286,6 @@
 }
 
 .tab {
-  height: 60px;
   background-color: #fff;
   max-width: 420px;
   top: 52px;
@@ -314,10 +313,11 @@
   -ms-flex-negative: 0;
   flex-shrink: 0;
   position: relative;
-  padding: 0 32px;
+  padding: 0 0 0 32px;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  width:420px;
+  overflow-x: hidden; 
 }
 
 .swipe-area .swipe .bar {
@@ -325,21 +325,32 @@
   -webkit-transition: all 0s;
   transition: all 0s;
   position: absolute;
-  bottom: 9px;
+  bottom: 5px;
   text-indent: -9999px;
   overflow: hidden;
   height: 3px;
   border-radius: 1.5px;
   background-color: #ff4081;
   transition-duration: 400ms;
+  left: 42px;
+}
+
+.swipe-area .swipe .list {
+  width:1000px;
+  font-size:15px;
+  font-family:arial;
+  padding:10px;
+  cursor: pointer;
+  display: flex;
 }
 
 .swipe-area .swipe li {
   font-family: Noto Sans KR,sans-serif;
   font-weight: 700;
   font-size: 15px;
-  line-height: 40px;
+  /* line-height: 40px; */
   margin-right: 24px;
+
 }
 
 .swipe-area .swipe li .tab-menu-container {
@@ -372,4 +383,7 @@
 
 .slick-arrow.slick-next {
   height: 60px;
+}
+.slick-slider{
+  margin-top: 0 !important;
 }

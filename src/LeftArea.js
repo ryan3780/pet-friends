@@ -12,6 +12,41 @@ const LeftArea = () =>{
 
     const animal = useSelector((state) => state.pickAnimal.value)
 
+    const swipeRef = useRef();
+
+    const slider = swipeRef.current;
+    
+    let mouseDown = false;
+    let startX, scrollLeft;
+   
+    const startDragging =  (e) => {
+   
+        mouseDown = true;
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+       
+    };
+
+    const stopDragging =  (e) => {
+        mouseDown = false;
+    
+    };
+
+    const mouseLeave =  () => {
+        mouseDown = false;
+    };
+
+    const mouseMove = (e) => {
+        e.preventDefault();
+
+        if(!mouseDown) return; 
+
+        const x = e.pageX - slider.offsetLeft;
+        const scroll = x - startX;
+        slider.scrollLeft = scrollLeft - scroll;
+  
+    }
+ 
     const handleClicked = () => {
         setIsClicked(!isClicked)
     }
@@ -45,9 +80,25 @@ const LeftArea = () =>{
 
       }, [animal]);
 
+    const sumMenuSelectWidth = (menu) => {
+        const initialValue = 0;
+        const sumWidth = menu.reduce((acc, cur) => acc + cur.offsetWidth + 24, initialValue);
+
+        return sumWidth;
+    }
+
     useEffect(() => {
         fetchData();
-    },[fetchData])
+
+        if(menuSelectRef.current.length !== 0){
+            handleMenuClick(0);
+            slider.scrollLeft = 0;
+            
+            swipeRef.current.lastChild.style.width = sumMenuSelectWidth(menuSelectRef.current) + 32 +'px';
+            
+        }
+
+    },[fetchData, slider])
 
 
     const handleMakeIsClickedFalse = () =>{
@@ -61,101 +112,19 @@ const LeftArea = () =>{
     const menuSelectBarRef = useRef();
 
     const handleMenuClick = (idx) => {
-        
+
         menuSelectRef.current[idx].className = "on";
         menuSelectRef.current.filter((item, index) => idx !== index && item != null ? item.className = 'off' : '');
 
-        menuSelectBarRef.current.style.width = menuSelectRef.current[idx].offsetWidth + 'px';     
+        menuSelectBarRef.current.style.width = menuSelectRef.current[idx].offsetWidth + 2 + 'px';     
 
         const firstItemX = menuSelectRef.current[0].getBoundingClientRect().x
 
         const itemX = menuSelectRef.current[idx].getBoundingClientRect().x
         
-        menuSelectBarRef.current.style.left = (itemX - firstItemX )+ 32 +`px`
+        menuSelectBarRef.current.style.left = Math.ceil((itemX - firstItemX )+ 41) +`px`
 
     }
-
-
-    const swipeRef = useRef();
-
-    const [endX, setEndX] = useState();
-
-    const slider = swipeRef.current
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-    let end;
-
-    const mouseDown = (e) =>{
-        console.log('Down endX : ' , endX)
-        isDown = true;
-        startX = e.pageX - slider.offsetLeft;
-        scrollLeft = slider.scrollLeft;
-    }
-    
-    const mouseLeave = () => {
-        isDown = false;
-
-        const transLateX = swipeRef.current.style.transform;
-        const range = transLateX.replaceAll(/\D/g,'')
-
-        if(-range < -422){
-            swipeRef.current.style.transform = `translateX(-422px)`;
-            end = -422;
-            return;
-        }
-
-        if(end > 0){
-            swipeRef.current.style.transform = `translateX(0px)`;
-            end = 0;
-            return;
-        }
-
-        setEndX(end)
-    }
-
-    const mouseUp = () =>{
-        isDown = false;
-
-        const transLateX = swipeRef.current.style.transform;
-        const range = transLateX.replaceAll(/\D/g,'')
-
-        if(-range < -422){
-            swipeRef.current.style.transform = `translateX(-422px)`;
-            end = -422;
-            return;
-        }
-
-        if(end > 0){
-            swipeRef.current.style.transform = `translateX(0px)`;
-            end = 0;
-            return;
-        }
-
-        setEndX(end)
-        
-    }
-    
-   
-    const mouseMove = (e) =>{
-        if(!isDown) return;
-        e.preventDefault();
-
-        const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) //scroll-fast
-
-        slider.scrollLeft = scrollLeft - walk;
-
-        if(endX !== undefined){
-            swipeRef.current.style.transform = `translateX(${endX + walk}px)`
-            end = endX + walk
-        }else{
-            swipeRef.current.style.transform = `translateX(${walk}px)`
-            end = walk;
-        }
-        
-    }
-    
 
     return (
         <div className="pf-responsive-container" onClick={handleMakeIsClickedFalse}>
@@ -178,12 +147,13 @@ const LeftArea = () =>{
                 <div className='swipe-area'>
                     <ul className='swipe' 
                     ref = {swipeRef}
-                    onMouseDown={mouseDown}
+                    onMouseDown={startDragging}
                     onMouseLeave={mouseLeave}
-                    onMouseUp={mouseUp}
+                    onMouseUp={stopDragging}
                     onMouseMove={mouseMove}
                     >
                         <li className='bar' ref={menuSelectBarRef} style={{width : '41px'}}>Bar</li>
+                        <div className='list'>
                         {tabMenu.map((item, idx) => {
                             return (<li key={idx}>
                                         <div key={idx} className="tab-menu-container cursor">
@@ -196,6 +166,7 @@ const LeftArea = () =>{
                                         </div>
                                     </li>)
                         })}
+                        </div>
                     </ul>
                 </div>
             </div>

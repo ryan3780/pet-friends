@@ -20,20 +20,21 @@ const LeftArea = () =>{
     let startX, scrollLeft;
    
     const startDragging =  (e) => {
-   
+        
         mouseDown = true;
         startX = e.pageX - slider.offsetLeft;
         scrollLeft = slider.scrollLeft;
-       
+        
     };
 
     const stopDragging =  (e) => {
         mouseDown = false;
-    
+        setInitPos(() => menuSelectRef.current[0].getBoundingClientRect().x)
     };
 
     const mouseLeave =  () => {
         mouseDown = false;
+        setInitPos(() => menuSelectRef.current[0].getBoundingClientRect().x)
     };
 
     const mouseMove = (e) => {
@@ -77,41 +78,21 @@ const LeftArea = () =>{
             }else{
                 setTabMenu(data.cat_tab_menu_list)
             }
-
+       
       }, [animal]);
 
     const sumMenuSelectWidth = (menu) => {
         const initialValue = 0;
-        const sumWidth = menu.reduce((acc, cur) => acc + cur.offsetWidth + 24, initialValue);
+        const sumWidth = menu.reduce((acc, cur) => acc + cur.offsetWidth + 30, initialValue);
 
         return sumWidth;
     }
 
-    useEffect(() => {
-        fetchData();
-
-        if(menuSelectRef.current.length !== 0){
-            handleMenuClick(0);
-            slider.scrollLeft = 0;
-            
-            swipeRef.current.lastChild.style.width = sumMenuSelectWidth(menuSelectRef.current) + 32 +'px';
-            
-        }
-
-    },[fetchData, slider])
-
-
-    const handleMakeIsClickedFalse = () =>{
-        if(isClicked){
-            setIsClicked(false)
-        }
-    }
-
-    const menuSelectRef = useRef([]);
-
-    const menuSelectBarRef = useRef();
+    const [initialPositionX, setInitialPositionX] = useState(0);
 
     const handleMenuClick = (idx) => {
+      
+        if(prevPosRef.current !== initialPositionX) return;
 
         menuSelectRef.current[idx].className = "on";
         menuSelectRef.current.filter((item, index) => idx !== index && item != null ? item.className = 'off' : '');
@@ -125,6 +106,41 @@ const LeftArea = () =>{
         menuSelectBarRef.current.style.left = Math.ceil((itemX - firstItemX )+ 41) +`px`
 
     }
+
+    useEffect(() => {
+        fetchData();
+        
+        if(menuSelectRef.current.length !== 0){
+            slider.scrollLeft = 0;
+            swipeRef.current.lastChild.style.width = `${sumMenuSelectWidth(menuSelectRef.current)}px`;
+            setInitialPositionX(menuSelectRef.current[0].getBoundingClientRect().x);
+            handleMenuClick(0);
+        }
+
+    // eslint-disable-next-line 
+    },[fetchData, slider]) 
+
+
+    const handleMakeIsClickedFalse = () =>{
+        if(isClicked){
+            setIsClicked(false);
+        }
+    }
+   
+    const menuSelectRef = useRef([]);
+
+    const menuSelectBarRef = useRef();
+
+    const [initPos, setInitPos] = useState(0);
+
+    const prevPosRef = useRef();
+   
+    useEffect(() => {
+        
+        prevPosRef.current = initPos;
+        setInitialPositionX(prevPosRef.current)
+
+    }, [initPos]); 
 
     return (
         <div className="pf-responsive-container" onClick={handleMakeIsClickedFalse}>
@@ -159,13 +175,13 @@ const LeftArea = () =>{
                                         <div key={idx} className="tab-menu-container cursor">
                                             <span 
                                             ref={(el) => menuSelectRef.current[idx] = el} 
-                                            onClick={() => handleMenuClick(idx)}
+                                            onClick={() =>  handleMenuClick(idx)}
                                             className={idx === 0 ? 'on' : 'off'}
                                             >
                                             {item.tab_menu_name}</span>
                                         </div>
                                     </li>)
-                        })}
+                             })}
                         </div>
                     </ul>
                 </div>

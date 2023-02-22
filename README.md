@@ -1,4 +1,6 @@
 # 펫프렌즈 메인화면 리액트로 만들기
+#### https://made-by-ryan-pet-friends.vercel.app/  
+#### vercel로 github와 연동하여 배포
 
 ## 제작 이유
 ### 1. 펫프렌즈 사이트가 예쁘다

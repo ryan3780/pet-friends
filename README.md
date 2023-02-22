@@ -1,6 +1,5 @@
 # 펫프렌즈 메인화면 리액트로 만들기
-[새 탭에서 열기](https://www.google.com/){:target="_blank"}
-#### [내가 만든 펫프렌즈 페이지] : https://made-by-ryan-pet-friends.vercel.app/ {: target="_blank"}
+#### [내가 만든 펫프렌즈 페이지] : https://made-by-ryan-pet-friends.vercel.app
 #### vercel로 github와 연동하여 배포
 
 ## 제작 이유

@@ -150,6 +150,10 @@
   max-width: 422px;
   margin-top: 0;
   margin-top: env(safe-area-inset-top);
+
+  padding-bottom: 221px;
+  display: flex;
+  flex-direction: column;
 }
 
 .select-area{
@@ -386,3 +390,102 @@
 .slick-slider{
   margin-top: 0 !important;
 }
+
+.blog{
+  display: flex;
+  flex-direction: row;
+  height: 100px;
+  justify-content: space-around;
+  align-content: center;
+  flex-wrap: wrap;
+  padding-right: 20px;
+  position: relative;
+  z-index: 3;
+  flex: 1;
+}
+
+.footer{
+  position : absolute;
+  bottom: 10px;
+}
+
+.footer > img {
+  width : 210px;
+  height: 210px;;
+}
+
+@keyframes ring {
+  0% {
+      width: 30px;
+      height: 30px;
+      opacity: 1;
+  }
+  100% {
+      width: 300px;
+      height: 300px;
+      opacity: 0;
+  }
+}
+
+.w-btn-neon2 {
+  position: relative;
+  border: none;
+  min-width: 150px;
+  min-height: 50px;
+  background: linear-gradient(
+      90deg,
+      rgba(129, 230, 217, 1) 0%,
+      rgba(79, 209, 197, 1) 100%
+  );
+  border-radius: 1000px;
+  color: darkslategray;
+  cursor: pointer;
+  box-shadow: 12px 12px 24px rgba(79, 209, 197, 0.64);
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.w-btn-neon2:hover {
+  transform: scale(1.2);
+}
+
+.w-btn-neon2:hover::after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  border: 6px solid #00ffcb;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ring 1.5s infinite;
+}
+
+.w-btn-outline {
+  position: relative;
+  padding: 15px 30px;
+  border-radius: 15px;
+  font-family: "paybooc-Light", sans-serif;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.w-btn-indigo-outline {
+  border: 3px solid aliceblue;
+  color: #1e6b7b;
+}
+
+.w-btn-indigo-outline:hover {
+  color: #1e6b7b;
+  background: aliceblue;
+  transform: scale(1.2);
+}
+
+.w-btn-outline:active {
+  transform: scale(1.5);
+}
+

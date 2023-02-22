@@ -1,12 +1,15 @@
 import { useDispatch } from 'react-redux';
 import { find } from './redux/search';
 import { useSelector } from 'react-redux'
+import { useCallback, useEffect } from 'react';
 
 const SearchInput = () => {
 
     const dispatch = useDispatch()
 
     const search = useSelector((state) => state.search.value)
+
+    const animal = useSelector((state) => state.pickAnimal.value)
 
     const reg = /[^a-zA-Z0-9ㄱ-힣]/g;
 
@@ -19,9 +22,13 @@ const SearchInput = () => {
         dispatch(find({text : replacedText}))
     }
 
-    const handleResetWord = () => {
+    const handleResetWord = useCallback(() => {
         dispatch(find({text : ''}))
-    }
+    },[dispatch])
+
+    useEffect(() => {
+        handleResetWord();
+    },[animal, handleResetWord])
 
     return(
         <>

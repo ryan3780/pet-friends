@@ -14,8 +14,6 @@ function RightArea () {
 
     const tab_info_id = animal.text[0] === "강아지" ? "8" : "18";
 
-    console.log('???????')
-
     useEffect(() => {
         (async () => {
             const {data} =

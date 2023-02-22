@@ -9,6 +9,8 @@
 ### 1. 컴포넌트는 Pascal Case
 ### 2. 변수 및 함수는 Camel Case
 ### 3. 직접 DOM 접근 X (useRef로 Virtual DOM 접근)
+### 4. 함수는 한가지 역할만 하기
+### 5. useState, useEffect 남용 X
 <br/>
 
 ## 사용된 것들

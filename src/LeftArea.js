@@ -2,6 +2,8 @@ import SelectArea from './commonCompoents/SelectArea'
 import { useSelector } from 'react-redux'
 import { useState, useEffect, useCallback, useRef } from 'react';
 import EventCarousel from './EventCarousel';
+import guWal from './img/9wal.jpeg';
+import grip from './img/grip.jpeg';
 
 
 const LeftArea = () =>{
@@ -187,6 +189,24 @@ const LeftArea = () =>{
                 </div>
             </div>
             <EventCarousel />
+           
+                <div className='blog'>
+                    <a href= "https://blog.naver.com/PostList.naver?blogId=9wal9wal"        target='_blank' rel="noreferrer noopener">
+                        <button className="w-btn-neon2" type="button">
+                            갈색푸들 궐궐!
+                        </button>
+                    </a>
+                    <a href= "https://9home.tistory.com/" target='_blank' rel="noreferrer noopener">
+                        <button className="w-btn-outline w-btn-indigo-outline" type="button">   
+                            그얼이네
+                        </button>
+                    </a>
+                </div>
+            
+            <div className='footer'>
+                <img src={guWal} alt="구월이 사진"/>
+                <img src={grip} alt="구월이 그립톡 사진"/>
+            </div>
         </div>
     )
 }

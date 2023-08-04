@@ -195,12 +195,12 @@ const LeftArea = () => {
             <EventCarousel />
 
             <div className='blog'>
-                <a href="https://blog.naver.com/PostList.naver?blogId=9wal9wal" target='_blank' rel="noreferrer noopener">
+                <a href="https://in.naver.com/9wal9wal" target='_blank' rel="noreferrer noopener">
                     <button className="w-btn-neon2" type="button">
-                        갈색푸들 궐궐!
+                        @푸들푸들!
                     </button>
                 </a>
-                <a href="https://9home.tistory.com/" target='_blank' rel="noreferrer noopener">
+                <a href="https://blog.naver.com/PostList.naver?blogId=9wal9wal" target='_blank' rel="noreferrer noopener">
                     <button className="w-btn-outline w-btn-indigo-outline" type="button">
                         그얼이네
                     </button>
